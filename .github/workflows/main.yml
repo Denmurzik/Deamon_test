@@ -1,15 +1,21 @@
-name: Deploy Course to Server
+name: Deploy PR (Label Triggered)
 
+# 1. Срабатывает, когда на PR вешают метку
 on:
-  push:
-    branches: ["main"]
-  workflow_dispatch:
+  pull_request_target:
+    types: [labeled]
 
 jobs:
-  upload-course:
+  deploy-pr:
+    # 2. ЗАЩИТА: Запускать только если метка называется 'deploy'
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     runs-on: ubuntu-latest
+    
     steps:
+      # 3. Скачиваем код именно из PR (а не из main)
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -19,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests pydantic pyyaml
 
-      # 1. SSH Туннель к API (порт 8000)
+      # 4. Настраиваем SSH (секреты доступны благодаря pull_request_target)
       - name: Setup SSH Tunnel
         uses: webfactory/ssh-agent@v0.8.0
         with:
@@ -30,12 +36,11 @@ jobs:
           ssh -o StrictHostKeyChecking=no -f -N -L 8000:127.0.0.1:8000 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
           echo "Tunnel opened to 8000"
 
-      # 2. Запуск загрузки любого ZIP-архива
+      # 5. Загружаем курс
       - name: Upload Course
         env:
           LMS_API_URL: http://127.0.0.1:8000
           LMS_API_TOKEN: ${{ secrets.LMS_API_TOKEN }}
         run: |
-          # Команда *.zip найдет первый попавшийся zip-файл в папке
-          echo "Found archive: " *.zip
+          echo "🚀 Deploying PR #${{ github.event.pull_request.number }} from user ${{ github.event.pull_request.user.login }}"
           python runner.py *.zip
