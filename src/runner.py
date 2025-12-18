@@ -44,6 +44,8 @@ def run(zip_path: Path, url: str | None, token: str | None, dry_run: bool) -> No
         # 3. Отправка на сервер
         print(f"\n🚀 Uploading to {url}...")
         uploader = CourseUploader(base_url=url, api_token=token)
+        payload_str = json.dumps(course_data, ensure_ascii=False)
+        print(f"ℹ️ Payload size: {len(payload_str) / 1024 / 1024:.2f} MB"
         uploader.upload_course(course_data)
 
     except Exception as e:
