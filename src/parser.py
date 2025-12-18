@@ -3,8 +3,7 @@ import json
 import zipfile
 from pathlib import Path
 from typing import List, Dict, Any
-import yaml
-from .exceptions import MissingFileError, ParserError, StructureError
+from .exceptions import MissingFileError, StructureError
 from .models import CourseModel, ModuleModel, SubmoduleModel, TaskModel, Difficulty, ElementType
 
 
@@ -13,6 +12,15 @@ def _read_file_content(zip_path: zipfile.Path, path_str: str) -> str:
     if not file_obj.exists():
         raise MissingFileError(f"{path_str} not found in archive")
     return file_obj.read_text(encoding="utf-8")
+
+
+def _ensure_int(value, default: int) -> int:
+    if value is None:
+        return default
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return default
 
 
 def _parse_from_json(course_root: zipfile.Path, json_data: Dict[str, Any]) -> dict:
@@ -42,7 +50,7 @@ def _parse_from_json(course_root: zipfile.Path, json_data: Dict[str, Any]) -> di
                         difficulty = Difficulty(item.get("difficulty", "Medium"))
                     except ValueError:
                         difficulty = Difficulty.Medium
-                    max_score = item.get("max_score", 100)
+                    max_score = _ensure_int(item.get("max_score"), 100)
 
                 task_title = item.get("title", "Untitled")
                 content_url = item.get("contentUrl")
@@ -97,7 +105,7 @@ def parse_course_archive(zip_path: Path) -> dict:
 
         course_json_file = course_root / "course.json"
         if course_json_file.exists():
-            print(f"📄 Found course.json in {course_root.at}...")
+            print(f"📄 Found course.json in {str(course_root)}...")
             try:
                 json_data = json.loads(course_json_file.read_text(encoding="utf-8"))
                 return _parse_from_json(course_root, json_data)
@@ -105,4 +113,4 @@ def parse_course_archive(zip_path: Path) -> dict:
                 print(f"❌ Failed to parse course.json: {e}")
                 raise StructureError(f"Invalid course.json: {e}")
 
-        raise StructureError("Only course.json format is supported in this updated parser version.")
+        raise StructureError("Only course.json format is supported in this updated src version.")

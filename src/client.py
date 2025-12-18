@@ -62,8 +62,15 @@ class CourseUploader:
         except requests.exceptions.ConnectionError:
             raise APIClientError(f"Connection failed (check internet or URL): {self.base_url}")
         except requests.exceptions.HTTPError as e:
+            body = ""
+            try:
+                body = e.response.text
+            except Exception:
+                body = "<unreadable response body>"
             raise APIClientError(
-                f"Server refused data (Status {e.response.status_code}): {e.response.text}"
+                f"Server refused data (Status {e.response.status_code}): {body}"
             ) from e
+        except requests.exceptions.RequestException as e:
+            raise APIClientError(f"Request failed: {str(e)}") from e
         except Exception as e:
             raise APIClientError(f"Unexpected upload error: {str(e)}") from e

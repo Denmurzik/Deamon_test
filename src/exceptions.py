@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 class ParserError(Exception):
-    """Base class for parser-related errors."""
+    """Base class for src-related errors."""
 
 
 class StructureError(ParserError):

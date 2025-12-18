@@ -6,15 +6,16 @@ import sys
 import json
 from pathlib import Path
 
-# Импорты внутри пакета (предполагается запуск через python -m parser.runner)
+# Импорты внутри пакета (предполагается запуск через python -m src.runner)
 try:
     from .parser import parse_course_archive
     from .client import CourseUploader, APIClientError
 except ImportError:
     # Фоллбек для запуска файла напрямую, а не как модуля
-    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-    from parser.parser import parse_course_archive
-    from parser.client import CourseUploader, APIClientError
+    # Добавляем папку `src` в sys.path, чтобы можно было импортировать локальные модули
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from parser import parse_course_archive
+    from client import CourseUploader, APIClientError
 
 
 def run(zip_path: Path, url: str | None, token: str | None, dry_run: bool) -> None:

@@ -25,8 +25,8 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install requests pydantic pyyaml
 
-      # 2. Запускаем runner.py ИЗ ПАПКИ parser
-      # Мы переходим в папку (cd parser) и указываем путь к архиву на уровень выше (../*.zip)
+      # 2. Запускаем runner.py ИЗ ПАПКИ src
+      # Мы переходим в папку (cd src) и указываем путь к архиву на уровень выше (../*.zip)
       - name: Upload Course
         env:
           LMS_API_URL: ${{ secrets.LMS_API_URL }}
