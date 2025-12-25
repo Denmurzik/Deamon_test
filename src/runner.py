@@ -6,34 +6,36 @@ import sys
 import json
 from pathlib import Path
 
-# Импорты внутри пакета (предполагается запуск через python -m src.runner)
+# Импорты внутри пакета
 try:
     from .parser import parse_course_archive
     from .client import CourseUploader, APIClientError
 except ImportError:
-    # Фоллбек для запуска файла напрямую, а не как модуля
-    # Добавляем папку `src` в sys.path, чтобы можно было импортировать локальные модули
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     from parser import parse_course_archive
     from client import CourseUploader, APIClientError
 
 
-def run(zip_path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
+def run(path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
     """
-    Main logic: parse zip and optionally upload.
+    Main logic: parse directory and optionally upload.
     """
-    if not zip_path.exists():
-        print(f"❌ Error: File not found: {zip_path}")
+    if not path.exists():
+        print(f"❌ Error: Path not found: {path}")
         sys.exit(1)
 
-    print(f"📦 Parsing archive: {zip_path}...")
+    if not path.is_dir():
+        print(f"❌ Error: Path is not a directory: {path}")
+        sys.exit(1)
+
+    print(f"📦 Parsing course from: {path}...")
     try:
-        # 1. Парсинг
-        course_data = parse_course_archive(zip_path)
+        # 1. Парсинг (теперь принимает папку)
+        course_data = parse_course_archive(path)
         print(f"✅ Parsed successfully: '{course_data.get('course_name')}' "
               f"({len(course_data.get('modules', []))} modules)")
 
-        # 2. Если включен режим dry-run или не переданы креды — просто печатаем JSON
+        # 2. Dry Run / Output
         if dry_run or not (url and token):
             print("\n👀 Dry Run / No Credentials provided. JSON Output:")
             print("-" * 40)
@@ -54,9 +56,9 @@ def run(zip_path: Path, url: str | None, token: str | None, dry_run: bool) -> No
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Parse and upload course archive.")
+    parser = argparse.ArgumentParser(description="Parse and upload course from directory.")
 
-    parser.add_argument("zip", type=Path, help="Path to course zip archive")
+    parser.add_argument("path", type=Path, help="Path to course directory (unpacked)")
 
     parser.add_argument("--url", type=str, default=os.getenv("LMS_API_URL"),
                         help="LMS API URL (or set LMS_API_URL env var)")
@@ -69,9 +71,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # Проверка: если мы не в dry-run, но урла нет — предупреждаем
     if not args.dry_run and (not args.url or not args.token):
         print("⚠️ Warning: --url and --token are required for upload. "
               "Running in dry-run mode (printing JSON).")
 
-    run(args.zip, args.url, args.token, args.dry_run)
+    run(args.path, args.url, args.token, args.dry_run)

@@ -1,17 +1,17 @@
 from __future__ import annotations
 import json
-import zipfile
 from pathlib import Path
 from typing import List, Dict, Any
 from .exceptions import MissingFileError, StructureError
 from .models import CourseModel, ModuleModel, SubmoduleModel, TaskModel, Difficulty, ElementType
 
 
-def _read_file_content(zip_path: zipfile.Path, path_str: str) -> str:
-    file_obj = zip_path / path_str
-    if not file_obj.exists():
-        raise MissingFileError(f"{path_str} not found in archive")
-    return file_obj.read_text(encoding="utf-8")
+def _read_file_content(root_path: Path, path_str: str) -> str:
+    """Читает содержимое файла по относительному пути."""
+    file_path = root_path / path_str
+    if not file_path.exists():
+        raise MissingFileError(f"{path_str} not found in {root_path}")
+    return file_path.read_text(encoding="utf-8")
 
 
 def _ensure_int(value, default: int) -> int:
@@ -23,7 +23,7 @@ def _ensure_int(value, default: int) -> int:
         return default
 
 
-def _parse_from_json(course_root: zipfile.Path, json_data: Dict[str, Any]) -> dict:
+def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
     modules_data = json_data.get("modules", [])
     parsed_modules: List[ModuleModel] = []
 
@@ -93,24 +93,44 @@ def _parse_from_json(course_root: zipfile.Path, json_data: Dict[str, Any]) -> di
     return course.model_dump(by_alias=True)
 
 
-def parse_course_archive(zip_path: Path) -> dict:
-    if not zip_path.exists():
-        raise FileNotFoundError(f"Archive not found: {zip_path}")
+def parse_course_archive(path: Path) -> dict:
+    """
+    Parses a course from a directory structure (unpacked archive).
+    Kept the function name compatible with existing imports.
+    """
+    if not path.exists():
+        raise FileNotFoundError(f"Path not found: {path}")
+    if not path.is_dir():
+        raise StructureError(f"Provided path is not a directory: {path}")
 
-    with zipfile.ZipFile(zip_path, "r") as zf:
-        root = zipfile.Path(zf)
-        top_level_dirs = [x for x in root.iterdir() if
-                          x.is_dir() and not x.name.startswith("__") and not x.name.startswith(".")]
-        course_root = top_level_dirs[0] if len(top_level_dirs) == 1 else root
+    # Логика определения корня курса:
+    # 1. Если course.json лежит прямо в переданной папке -> это корень.
+    # 2. Если в папке только одна подпапка и course.json внутри неё -> это корень.
 
-        course_json_file = course_root / "course.json"
-        if course_json_file.exists():
-            print(f"📄 Found course.json in {str(course_root)}...")
-            try:
-                json_data = json.loads(course_json_file.read_text(encoding="utf-8"))
-                return _parse_from_json(course_root, json_data)
-            except Exception as e:
-                print(f"❌ Failed to parse course.json: {e}")
-                raise StructureError(f"Invalid course.json: {e}")
+    if (path / "course.json").exists():
+        course_root = path
+    else:
+        # Ищем подпапки (исключая скрытые)
+        top_level_dirs = [x for x in path.iterdir() if
+                          x.is_dir() and not x.name.startswith(".") and not x.name.startswith("__")]
 
-        raise StructureError("Only course.json format is supported in this updated src version.")
+        if len(top_level_dirs) == 1:
+            potential_root = top_level_dirs[0]
+            if (potential_root / "course.json").exists():
+                course_root = potential_root
+            else:
+                course_root = path  # Не нашли, сбрасываем на исходную, чтобы ошибка была понятной
+        else:
+            course_root = path
+
+    course_json_file = course_root / "course.json"
+    if course_json_file.exists():
+        print(f"📄 Found course.json in {str(course_root)}...")
+        try:
+            json_data = json.loads(course_json_file.read_text(encoding="utf-8"))
+            return _parse_from_json(course_root, json_data)
+        except Exception as e:
+            print(f"❌ Failed to parse course.json: {e}")
+            raise StructureError(f"Invalid course.json: {e}")
+
+    raise StructureError(f"course.json not found in {course_root}")
