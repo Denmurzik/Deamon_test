@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Скачиваем ВСЁ из ветки Pull Request
+      # 1. Скачиваем содержимое репозитория (оно попадает в текущую папку)
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -23,15 +23,18 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # Убедитесь, что устанавливаются все нужные библиотеки для клиента
           pip install requests pydantic pyyaml
 
-      # 2. Запускаем runner.py ИЗ ПАПКИ src
-      # Мы переходим в папку (cd src) и указываем путь к архиву на уровень выше (../*.zip)
+      # 2. Запускаем runner.py
+      # Теперь мы передаем точку "." (текущая директория), так как checkout распаковал курс прямо сюда.
+      # PYTHONPATH=. нужен, чтобы питон видел пакет src как модуль.
       - name: Upload Course
         env:
           LMS_API_URL: ${{ secrets.LMS_API_URL }}
           LMS_API_TOKEN: ${{ secrets.LMS_API_TOKEN }}
+          PYTHONPATH: .
         run: |
           echo "🚀 Sending to Public API: $LMS_API_URL"
-          cd parser
-          python runner.py ../*.zip
+          # Запускаем скрипт, указывая "." как путь к папке с курсом
+          python src/runner.py .
