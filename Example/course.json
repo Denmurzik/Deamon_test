@@ -1,0 +1,52 @@
+{
+  "title": "Алгоритмы и Структуры Данных (C)",
+  "description": "Базовый курс: рекурсия, синтаксис C, сортировки и алгоритмы поиска.",
+  "compilers": [
+    "python3.7.6"
+  ],
+  "modules": [
+    {
+      "title": "Лекция 1: Рекурсия и Основы C",
+      "content": [
+        {
+          "type": "submodule",
+          "title": "Глава 1: Рекурсия",
+          "contentUrl": "content/Lecture-1/topic1.md"
+        },
+        {
+          "type": "submodule",
+          "title": "Глава 2: Основы синтаксиса C",
+          "contentUrl": "content/Lecture-1/topic2.md"
+        },
+        {
+          "type": "task",
+          "title": "Задача 1. Эффективный поиск",
+          "contentUrl": "content/Lecture-1/task1.md",
+          "submissionsUrl": "content/Lecture-1/results_sub.json",
+          "difficulty": "medium",
+          "testsUrl": "content/Lecture-1/task1/tests",
+          "time_limit": "2.0s",
+          "memory_limit": "512MB"          
+        }
+      ]
+    },
+    {
+      "title": "Лекция 2: Сортировки и Поиск",
+      "content": [
+        {
+          "type": "submodule",
+          "title": "Глава 3: Теория сортировок",
+          "contentUrl": "content/Lecture-2/topic3.md"
+        },
+        {
+          "type": "submodule",
+          "title": "Глава 4: Поиск и Хеширование",
+          "contentUrl": "content/Lecture-2/topic4.md"
+        }
+      ]
+    }
+  ],
+  "allowed_users": [
+    "stud@nsuts.ru"
+  ]
+}
