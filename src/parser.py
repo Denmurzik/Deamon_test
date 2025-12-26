@@ -36,18 +36,16 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         for item in content_items:
             item_type_str = item.get("type")
 
-            # Обрабатываем и задачи, и теорию
             if item_type_str in ["task", "submodule"]:
-
-                # Определяем тип: submodule -> Theory, task -> Task
                 if item_type_str == "submodule":
                     element_type = ElementType.Theory
                     difficulty = None
                     max_score = 0
                 else:
                     element_type = ElementType.Task
+                    raw_difficulty = str(item.get("difficulty", "medium")).lower()
                     try:
-                        difficulty = Difficulty(item.get("difficulty", "Medium"))
+                        difficulty = Difficulty(raw_difficulty)
                     except ValueError:
                         difficulty = Difficulty.Medium
                     max_score = _ensure_int(item.get("max_score"), 100)
@@ -85,9 +83,11 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         else:
             print(f"⚠️ Warning: Module '{mod_title}' skipped (no content found).")
 
+    # ДОБАВЛЕНО: получение allowed_users из JSON
     course = CourseModel(
         course_name=json_data.get("title", "Imported Course"),
         description=json_data.get("description"),
+        allowed_users=json_data.get("allowed_users"),  # <--- Здесь
         modules=parsed_modules
     )
     return course.model_dump(by_alias=True)
@@ -103,14 +103,9 @@ def parse_course_archive(path: Path) -> dict:
     if not path.is_dir():
         raise StructureError(f"Provided path is not a directory: {path}")
 
-    # Логика определения корня курса:
-    # 1. Если course.json лежит прямо в переданной папке -> это корень.
-    # 2. Если в папке только одна подпапка и course.json внутри неё -> это корень.
-
     if (path / "course.json").exists():
         course_root = path
     else:
-        # Ищем подпапки (исключая скрытые)
         top_level_dirs = [x for x in path.iterdir() if
                           x.is_dir() and not x.name.startswith(".") and not x.name.startswith("__")]
 
@@ -119,7 +114,7 @@ def parse_course_archive(path: Path) -> dict:
             if (potential_root / "course.json").exists():
                 course_root = potential_root
             else:
-                course_root = path  # Не нашли, сбрасываем на исходную, чтобы ошибка была понятной
+                course_root = path
         else:
             course_root = path
 
