@@ -43,11 +43,13 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
                     max_score = 0
                 else:
                     element_type = ElementType.Task
+
                     raw_difficulty = str(item.get("difficulty", "medium")).lower()
                     try:
                         difficulty = Difficulty(raw_difficulty)
                     except ValueError:
                         difficulty = Difficulty.Medium
+
                     max_score = _ensure_int(item.get("max_score"), 100)
 
                 task_title = item.get("title", "Untitled")
@@ -83,13 +85,23 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         else:
             print(f"⚠️ Warning: Module '{mod_title}' skipped (no content found).")
 
-    # ДОБАВЛЕНО: получение allowed_users из JSON
+    # ЛОГИКА ИЗВЛЕЧЕНИЯ ALLOWED_USERS
+    # Пробуем snake_case (стандарт Python/SQL) и camelCase (стандарт JS/JSON)
+    users_list = json_data.get("allowed_users") or json_data.get("allowedUsers") or []
+
+    # Отладочный принт, чтобы убедиться, что парсер видит поле
+    print(f"🔎 DEBUG PARSER: Found allowed_users: {users_list}")
+
     course = CourseModel(
         course_name=json_data.get("title", "Imported Course"),
         description=json_data.get("description"),
-        allowed_users=json_data.get("allowed_users"),  # <--- Здесь
+        # Передаем найденный список
+        allowed_users=users_list,
         modules=parsed_modules
     )
+
+    # model_dump преобразует объект в dict. Поля со значением None могут исключаться,
+    # но так как мы поставили default_factory=list, там будет []
     return course.model_dump(by_alias=True)
 
 

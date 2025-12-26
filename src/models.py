@@ -42,11 +42,11 @@ class ModuleModel(BaseModel):
 class CourseModel(BaseModel):
     course_name: str
     description: Optional[str] = None
-    
-    # ДОБАВЛЕНО: поддержка списка разрешенных пользователей
-    # Соответствует allowed_users TEXT[] в SQL
-    allowed_users: Optional[List[str]] = Field(default=None)
-    
+
+    # ИСПРАВЛЕНО: Добавлено поле allowed_users
+    # Используем default_factory=list, чтобы по умолчанию был пустой список, а не None
+    allowed_users: List[str] = Field(default_factory=list)
+
     modules: List[ModuleModel]
 
     @field_validator("modules")
