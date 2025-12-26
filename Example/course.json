@@ -1,5 +1,5 @@
 {
-  "title": "Алгоритмы и Структуры Данных (C)",
+  "title": "Демоны Демоны",
   "description": "Базовый курс: рекурсия, синтаксис C, сортировки и алгоритмы поиска.",
   "compilers": [
     "python3.7.6"
@@ -26,7 +26,7 @@
           "difficulty": "medium",
           "testsUrl": "content/Lecture-1/task1/tests",
           "time_limit": "2.0s",
-          "memory_limit": "512MB"          
+          "memory_limit": "512MB"
         }
       ]
     },
