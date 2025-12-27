@@ -23,7 +23,6 @@
           "type": "task",
           "title": "Задача 1. Эффективный поиск",
           "contentUrl": "content/Lecture-1/task1.md",
-          "submissionsUrl": "content/Lecture-1/results_sub.json",
           "difficulty": "medium",
           "testsUrl": "content/Lecture-1/task1/tests",
           "time_limit": "2.0s",
