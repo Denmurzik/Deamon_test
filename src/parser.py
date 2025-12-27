@@ -7,7 +7,7 @@ from .models import CourseModel, ModuleModel, ContentItemModel
 
 
 def _read_file_content(root_path: Path, path_str: str) -> str:
-    """Читает содержимое файла (например, markdown описание) по пути из JSON."""
+
     file_path = root_path / path_str
     if not file_path.exists():
         raise MissingFileError(f"{path_str} not found in {root_path}")
@@ -24,9 +24,7 @@ def _ensure_int(value, default: int) -> int:
 
 
 def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
-    """
-    Преобразует сырой JSON курса в валидированный словарь для отправки.
-    """
+
     modules_data = json_data.get("modules", [])
     parsed_modules: List[ModuleModel] = []
 
@@ -41,7 +39,6 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
             if item_type not in ["task", "submodule"]:
                 continue
 
-            # Загружаем описание задачи или теорию из внешнего файла
             content_url = item.get("contentUrl")
             description = ""
             if content_url:
@@ -50,7 +47,7 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
                 except Exception:
                     description = f"Content missing at: {content_url}"
 
-            # Создаем элемент (задачу или подмодуль)
+     
             element = ContentItemModel(
                 type=item_type,
                 title=item.get("title", "Untitled"),
@@ -59,16 +56,17 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
                 description=description,
                 time_limit=item.get("time_limit"),
                 memory_limit=item.get("memory_limit"),
-                contentUrl=content_url
+                contentUrl=content_url,
+                testsUrl=item.get("testsUrl")
             )
             module_elements.append(element)
 
         parsed_modules.append(ModuleModel(
             module_name=mod_title,
-            submodules=module_elements  # Передаем в аргумент с именем алиаса
+            submodules=module_elements 
         ))
 
-    # Извлекаем список разрешенных пользователей
+
     allowed_users = json_data.get("allowed_users") or json_data.get("allowedUsers") or []
     print(f"🔎 DEBUG: Parser found allowed_users: {allowed_users}")
 
@@ -76,10 +74,11 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         course_name=json_data.get("title", "Imported Course"),
         description=json_data.get("description"),
         allowed_users=allowed_users,
+        address_name=json_data.get("address_name"),
         modules=parsed_modules
     )
 
-    # by_alias=True критически важен, чтобы ключи в JSON совпали с ожиданиями сервера
+
     return course.model_dump(by_alias=True)
 
 
@@ -90,7 +89,6 @@ def parse_course_archive(path: Path) -> dict:
     if not path.exists() or not path.is_dir():
         raise StructureError(f"Invalid course path: {path}")
 
-    # Определяем корень курса (где лежит course.json)
     course_root = path if (path / "course.json").exists() else next(path.iterdir(), path)
 
     course_json_file = course_root / "course.json"
