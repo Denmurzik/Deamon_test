@@ -1,5 +1,6 @@
 {
   "title": "Демоны Демоны",
+  "address_name": "olymp_demons_test_v1",
   "description": "Базовый курс: рекурсия, синтаксис C, сортировки и алгоритмы поиска.",
   "compilers": [
     "python3.7.6"
@@ -46,7 +47,7 @@
       ]
     }
   ],
-  
+
   "allowed_users": [
     "stud@nsuts.ru"
   ]
