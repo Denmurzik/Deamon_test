@@ -1,0 +1,23 @@
+[project]
+name = "deamon-git"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "vlad",email = "vladislavgaev84037@gmail.com "}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "ruff (>=0.14.13,<0.15.0)",
+    "mypy (>=1.19.1,<2.0.0)",
+    "pre-commit (>=4.5.1,<5.0.0)"
+]
