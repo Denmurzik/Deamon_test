@@ -37,7 +37,6 @@ class ModuleModel(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     module_name: str = Field(..., alias="module_name")
-    # Сервер ожидает ключ 'submodules' для списка элементов контента
     content: List[ContentItemModel] = Field(..., alias="submodules")
 
 

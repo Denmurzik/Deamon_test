@@ -9,4 +9,5 @@ RUN pip install --no-cache-dir requests pydantic pyyaml
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
 
-ENTRYPOINT ["python", "src/runner.py"]
+# Измените последнюю строку в Dockerfile
+ENTRYPOINT ["python", "-m", "src.runner"]
