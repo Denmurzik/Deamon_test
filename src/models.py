@@ -14,6 +14,7 @@ class ContentItemModel(BaseModel):
     Модель для элемента контента (задача или подмодуль).
     Соответствует серверному ContentItem.
     """
+
     model_config = ConfigDict(populate_by_name=True)
 
     type: Literal["task", "submodule"]
@@ -27,12 +28,12 @@ class ContentItemModel(BaseModel):
     tests_url: Optional[str] = Field(None, alias="testsUrl")
 
 
-
 class ModuleModel(BaseModel):
     """
     Модель модуля. Поле 'content' при сериализации превратится в 'submodules',
     как того ожидает серверный alias.
     """
+
     model_config = ConfigDict(populate_by_name=True)
 
     module_name: str = Field(..., alias="module_name")
@@ -44,6 +45,7 @@ class CourseModel(BaseModel):
     """
     Финальная модель курса для отправки на сервер.
     """
+
     model_config = ConfigDict(populate_by_name=True)
 
     course_name: str = Field(..., alias="course_name")

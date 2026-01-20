@@ -1,0 +1,33 @@
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace      # Удаляет лишние пробелы в конце строк
+      - id: end-of-file-fixer        # Добавляет пустую строку в конце файлов
+      - id: check-yaml               # Проверяет синтаксис .yml файлов (например, для CI/CD)
+      - id: check-added-large-files  # Не дает случайно закоммитить огромные файлы
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.6
+    hooks:
+      - id: ruff
+        args: [ --fix ]              # Автоматически исправляет то, что может (например, неиспользуемые импорты)
+
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black                    # Форматирует код по стандарту
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.7.1
+    hooks:
+      - id: mypy
+        # Чтобы Mypy видел ваши библиотеки, их нужно перечислить здесь
+        additional_dependencies: [
+          "types-requests",
+          "pydantic>=2.0",
+          "types-PyYAML"
+        ]
+        # Можно передать аргументы, чтобы Mypy не ругался на отсутствие типов в сторонних либах
+        args: [--ignore-missing-imports]

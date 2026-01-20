@@ -55,22 +55,28 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
                 type=item_type,
                 title=item.get("title", "Untitled"),
                 difficulty=str(item.get("difficulty", "medium")).lower(),
-                max_score=_ensure_int(item.get("max_score"), 100 if item_type == "task" else 0),
+                max_score=_ensure_int(
+                    item.get("max_score"), 100 if item_type == "task" else 0
+                ),
                 description=description,
                 time_limit=item.get("time_limit"),
                 memory_limit=item.get("memory_limit"),
                 contentUrl=content_url,
-                testsUrl=item.get("testsUrl")
+                testsUrl=item.get("testsUrl"),
             )
             module_elements.append(element)
 
-        parsed_modules.append(ModuleModel(
-            module_name=mod_title,
-            submodules=module_elements  # Передаем в аргумент с именем алиаса
-        ))
+        parsed_modules.append(
+            ModuleModel(
+                module_name=mod_title,
+                submodules=module_elements,  # Передаем в аргумент с именем алиаса
+            )
+        )
 
     # Извлекаем список разрешенных пользователей
-    allowed_users = json_data.get("allowed_users") or json_data.get("allowedUsers") or []
+    allowed_users = (
+        json_data.get("allowed_users") or json_data.get("allowedUsers") or []
+    )
     print(f"🔎 DEBUG: Parser found allowed_users: {allowed_users}")
 
     course = CourseModel(
@@ -79,8 +85,7 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         allowed_users=allowed_users,
         compilers=json_data.get("compilers"),
         address_name=json_data.get("address_name"),
-
-        modules=parsed_modules
+        modules=parsed_modules,
     )
 
     # by_alias=True критически важен, чтобы ключи в JSON совпали с ожиданиями сервера
@@ -95,7 +100,9 @@ def parse_course_archive(path: Path) -> dict:
         raise StructureError(f"Invalid course path: {path}")
 
     # Определяем корень курса (где лежит course.json)
-    course_root = path if (path / "course.json").exists() else next(path.iterdir(), path)
+    course_root = (
+        path if (path / "course.json").exists() else next(path.iterdir(), path)
+    )
 
     course_json_file = course_root / "course.json"
     if not course_json_file.exists():
