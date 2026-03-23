@@ -1,57 +1,55 @@
 from __future__ import annotations
+from enum import Enum
 from typing import List, Optional, Literal
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
-class PenaltyLevel(BaseModel):
-    days_after_open: int
-    max_points: int
+class ElementType(str, Enum):
+    Task = "task"
+    Submodule = "submodule"
 
 
-class TaskModel(BaseModel):
-    """Задача внутри подмодуля. Соответствует серверному TaskImportDto."""
+class ContentItemModel(BaseModel):
+    """
+    Модель для элемента контента (задача или подмодуль).
+    Соответствует серверному ContentItem.
+    """
+    model_config = ConfigDict(populate_by_name=True)
 
+    type: Literal["task", "submodule"]
     title: str
-    type: Literal["task", "theory"] = "task"
-    difficulty: str = "medium"
-    max_score: int = Field(default=100, ge=1)
+    difficulty: Optional[str] = "medium"
+    max_score: Optional[int] = 0
     description: Optional[str] = None
     time_limit: Optional[str] = None
     memory_limit: Optional[str] = None
-    contentUrl: Optional[str] = None
-    testsUrl: Optional[str] = None
-    penalties: Optional[List[PenaltyLevel]] = None
+    content_url: Optional[str] = Field(None, alias="contentUrl")
+    tests_url: Optional[str] = Field(None, alias="testsUrl")
 
-
-class SubmoduleModel(BaseModel):
-    """Подмодуль, содержащий задачи. Соответствует серверному SubmoduleImportDto."""
-
-    title: str
-    description: Optional[str] = None
-    contentUrl: Optional[str] = None
-    tasks: List[TaskModel]
 
 
 class ModuleModel(BaseModel):
-    """Модуль курса. Соответствует серверному ModuleImportDto."""
+    """
+    Модель модуля. Поле 'content' при сериализации превратится в 'submodules',
+    как того ожидает серверный alias.
+    """
+    model_config = ConfigDict(populate_by_name=True)
 
-    title: str
-    open_date: Optional[str] = None
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
-    submodules: List[SubmoduleModel]
+    module_name: str = Field(..., alias="module_name")
+    # Сервер ожидает ключ 'submodules' для списка элементов контента
+    content: List[ContentItemModel] = Field(..., alias="submodules")
 
 
 class CourseModel(BaseModel):
-    """Финальная модель курса. Соответствует серверному CourseImportDto."""
+    """
+    Финальная модель курса для отправки на сервер.
+    """
+    model_config = ConfigDict(populate_by_name=True)
 
-    title: str
+    course_name: str = Field(..., alias="course_name")
     description: Optional[str] = None
-    address_name: Optional[str] = None
-    open_date: Optional[str] = None
-    close_date: Optional[str] = None
-    allowed_users: Optional[List[str]] = None
-    allowed_groups: Optional[List[str]] = None
+    allowed_users: List[str] = Field(default_factory=list, alias="allowed_users")
     compilers: Optional[List[str]] = None
-    seminars: Optional[List[str]] = None
+    address_name: Optional[str] = None
+
     modules: List[ModuleModel]

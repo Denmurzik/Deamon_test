@@ -4,22 +4,20 @@ import json
 from pathlib import Path
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
-from typing import Any, Dict
+from typing import Any, Dict, List
 from .exceptions import APIClientError
 
 
 class CourseUploader:
-    def __init__(
-        self, base_url: str, api_token: str, timeout: int = 120, max_retries: int = 3
-    ):
-        self.base_url = base_url.rstrip("/")
+    def __init__(self, base_url: str, api_token: str, timeout: int = 120, max_retries: int = 3):
+        self.base_url = base_url.rstrip('/')
         self.timeout = timeout
 
         retry_strategy = Retry(
             total=max_retries,
             backoff_factor=2,
             status_forcelist=[429, 500, 502, 503, 504],
-            allowed_methods=["POST"],
+            allowed_methods=["POST"]
         )
 
         adapter = HTTPAdapter(max_retries=retry_strategy)
@@ -27,11 +25,12 @@ class CourseUploader:
         self.session.mount("https://", adapter)
         self.session.mount("http://", adapter)
 
-        # X-API-Key — сервер использует ApiKeyAuthAttribute с заголовком X-API-Key
-        # Content-Type для multipart выставлять вручную НЕ НАДО (requests сделает это сам)
-        self.session.headers.update(
-            {"X-API-Key": api_token, "User-Agent": "CourseParser/1.1"}
-        )
+        # Заголовки Authorization оставляем, но Content-Type для multipart
+        # выставлять вручную НЕ НАДО (requests сделает это сам с boundary).
+        self.session.headers.update({
+            "Authorization": f"Bearer {api_token}",
+            "User-Agent": "CourseParser/1.1"
+        })
 
     def upload_course(self, course_data: Dict[str, Any], course_root: Path) -> None:
         endpoint = f"{self.base_url}/api/v1/courses/import"
@@ -41,7 +40,9 @@ class CourseUploader:
 
         # JSON передаем как поле формы, а не как body
         # Важно: ensure_ascii=False, чтобы кириллица не ломалась
-        payload = {"course_json": json.dumps(course_data, ensure_ascii=False)}
+        payload = {
+            "course_json": json.dumps(course_data, ensure_ascii=False)
+        }
 
         print(f"📦 Collecting files from {course_root}...")
 
@@ -51,7 +52,7 @@ class CourseUploader:
             for root, _, filenames in os.walk(course_root):
                 for filename in filenames:
                     # Пропускаем служебные файлы (git, pycache, .DS_Store и т.д.)
-                    if filename.startswith(".") or filename.startswith("__"):
+                    if filename.startswith('.') or filename.startswith('__'):
                         continue
 
                     file_path = Path(root) / filename
@@ -65,13 +66,7 @@ class CourseUploader:
                     # Requests поддерживает список кортежей ('field_name', (filename, file_obj))
                     # Мы передаем relative_path как filename
                     files_payload.append(
-                        (
-                            "files",
-                            (
-                                str(relative_path).replace("\\", "/"),
-                                open(file_path, "rb"),
-                            ),
-                        )
+                        ('files', (str(relative_path).replace("\\", "/"), open(file_path, 'rb')))
                     )
                     file_count += 1
 
@@ -80,7 +75,10 @@ class CourseUploader:
             # 2. Отправка (multipart/form-data)
             # При передаче files=... requests сам ставит Content-Type: multipart/form-data
             response = self.session.post(
-                endpoint, data=payload, files=files_payload, timeout=self.timeout
+                endpoint,
+                data=payload,
+                files=files_payload,
+                timeout=self.timeout
             )
             response.raise_for_status()
             print(f"✅ Upload successful. Server Response: {response.text}")

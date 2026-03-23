@@ -5,8 +5,15 @@ import os
 import sys
 import json
 from pathlib import Path
-from src.parser import parse_course_archive
-from src.client import CourseUploader
+
+# Импорты внутри пакета
+try:
+    from .parser import parse_course_archive
+    from .client import CourseUploader, APIClientError
+except ImportError:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from parser import parse_course_archive
+    from client import CourseUploader, APIClientError
 
 
 def run(path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
@@ -16,10 +23,8 @@ def run(path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
     try:
         # 1. Парсинг
         course_data = parse_course_archive(path)
-        print(
-            f"✅ Parsed successfully: '{course_data.get('course_name')}' "
-            f"({len(course_data.get('modules', []))} modules)"
-        )
+        print(f"✅ Parsed successfully: '{course_data.get('course_name')}' "
+              f"({len(course_data.get('modules', []))} modules)")
 
         # 2. Dry Run
         if dry_run or not (url and token):
@@ -40,38 +45,23 @@ def run(path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Parse and upload course from directory."
-    )
+    parser = argparse.ArgumentParser(description="Parse and upload course from directory.")
 
     parser.add_argument("path", type=Path, help="Path to course directory (unpacked)")
 
-    parser.add_argument(
-        "--url",
-        type=str,
-        default=os.getenv("LMS_API_URL"),
-        help="LMS API URL (or set LMS_API_URL env var)",
-    )
+    parser.add_argument("--url", type=str, default=os.getenv("LMS_API_URL"),
+                        help="LMS API URL (or set LMS_API_URL env var)")
 
-    parser.add_argument(
-        "--token",
-        type=str,
-        default=os.getenv("LMS_API_TOKEN"),
-        help="LMS API Token (or set LMS_API_TOKEN env var)",
-    )
+    parser.add_argument("--token", type=str, default=os.getenv("LMS_API_TOKEN"),
+                        help="LMS API Token (or set LMS_API_TOKEN env var)")
 
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Print JSON to stdout instead of uploading",
-    )
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Print JSON to stdout instead of uploading")
 
     args = parser.parse_args()
 
     if not args.dry_run and (not args.url or not args.token):
-        print(
-            "⚠️ Warning: --url and --token are required for upload. "
-            "Running in dry-run mode (printing JSON)."
-        )
+        print("⚠️ Warning: --url and --token are required for upload. "
+              "Running in dry-run mode (printing JSON).")
 
     run(args.path, args.url, args.token, args.dry_run)
