@@ -91,7 +91,7 @@ unsigned long long factorial(int n) {
     return n * factorial(n - 1);
 }
 ```
-````
+
 
 ### Шаг 4. Напишите условия задач (task)
 
@@ -120,7 +120,7 @@ unsigned long long factorial(int n) {
 | `2 3` | `5` |
 | `-1 1` | `0` |
 
-
+````
 ### Шаг 5. Важные правила
 
 **Порядок элементов в `content[]` имеет значение:**
