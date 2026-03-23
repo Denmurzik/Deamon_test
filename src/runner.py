@@ -23,7 +23,7 @@ def run(path: Path, url: str | None, token: str | None, dry_run: bool) -> None:
     try:
         # 1. Парсинг
         course_data = parse_course_archive(path)
-        print(f"✅ Parsed successfully: '{course_data.get('course_name')}' "
+        print(f"✅ Parsed successfully: '{course_data.get('title')}' "
               f"({len(course_data.get('modules', []))} modules)")
 
         # 2. Dry Run
