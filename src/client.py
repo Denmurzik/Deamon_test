@@ -25,12 +25,14 @@ class CourseUploader:
         self.session.mount("https://", adapter)
         self.session.mount("http://", adapter)
 
-        # Заголовки Authorization оставляем, но Content-Type для multipart
-        # выставлять вручную НЕ НАДО (requests сделает это сам с boundary).
+        # X-API-Key — сервер использует ApiKeyAuthAttribute с заголовком X-API-Key
+        # Content-Type для multipart выставлять вручную НЕ НАДО (requests сделает это сам)
         self.session.headers.update({
-            "Authorization": f"Bearer {api_token}",
+            "X-API-Key": api_token,
             "User-Agent": "CourseParser/1.1"
         })
+        # Self-signed сертификат на сервере — отключаем проверку
+        self.session.verify = False
 
     def upload_course(self, course_data: Dict[str, Any], course_root: Path) -> None:
         endpoint = f"{self.base_url}/api/v1/courses/import"
