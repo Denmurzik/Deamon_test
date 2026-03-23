@@ -69,6 +69,10 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         parsed_modules.append(
             ModuleModel(
                 module_name=mod_title,
+                open_date=mod.get("open_date"),
+                start_date=mod.get("start_date"),
+                end_date=mod.get("end_date"),
+                penalties=mod.get("penalties"),
                 submodules=module_elements,  # Передаем в аргумент с именем алиаса
             )
         )
@@ -82,6 +86,8 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
     course = CourseModel(
         course_name=json_data.get("title", "Imported Course"),
         description=json_data.get("description"),
+        open_date=json_data.get("open_date"),
+        close_date=json_data.get("close_date"),
         allowed_users=allowed_users,
         compilers=json_data.get("compilers"),
         address_name=json_data.get("address_name"),

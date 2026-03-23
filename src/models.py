@@ -37,6 +37,10 @@ class ModuleModel(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     module_name: str = Field(..., alias="module_name")
+    open_date: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+    penalties: Optional[List[dict]] = None
     content: List[ContentItemModel] = Field(..., alias="submodules")
 
 
@@ -49,6 +53,8 @@ class CourseModel(BaseModel):
 
     course_name: str = Field(..., alias="course_name")
     description: Optional[str] = None
+    open_date: Optional[str] = None
+    close_date: Optional[str] = None
     allowed_users: List[str] = Field(default_factory=list, alias="allowed_users")
     compilers: Optional[List[str]] = None
     address_name: Optional[str] = None
