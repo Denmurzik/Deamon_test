@@ -53,8 +53,11 @@ class CourseUploader:
         try:
             for root, _, filenames in os.walk(course_root):
                 for filename in filenames:
-                    # Пропускаем служебные файлы (git, pycache, .DS_Store и т.д.)
+                    # Пропускаем служебные файлы и бинарники
                     if filename.startswith('.') or filename.startswith('__'):
+                        continue
+                    ext = Path(filename).suffix.lower()
+                    if ext in {'.exe', '.dll', '.so', '.o', '.class', '.pyc'}:
                         continue
 
                     file_path = Path(root) / filename
