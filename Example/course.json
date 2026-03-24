@@ -22,7 +22,7 @@
     "modules": [
         {
             "title": "Модуль 1: Ввод-вывод и арифметика",
-            "open_date": "2026-09-01T00:00:00Z",
+            "open_date": "2026-02-01T00:00:00Z",
             "content": [
                 {
                     "type": "submodule",
@@ -39,8 +39,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -53,8 +59,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -67,8 +79,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -81,8 +99,14 @@
                     "memory_limit": "256MB",
                     "max_score": 8,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 6 },
-                        { "days_after_open": 14, "max_points": 4 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 6
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 4
+                        }
                     ]
                 },
                 {
@@ -95,8 +119,14 @@
                     "memory_limit": "256MB",
                     "max_score": 8,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 6 },
-                        { "days_after_open": 14, "max_points": 4 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 6
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 4
+                        }
                     ]
                 },
                 {
@@ -109,8 +139,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -123,8 +159,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -137,8 +179,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -151,8 +199,14 @@
                     "memory_limit": "256MB",
                     "max_score": 12,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 10 },
-                        { "days_after_open": 14, "max_points": 6 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 10
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 6
+                        }
                     ]
                 },
                 {
@@ -165,8 +219,14 @@
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 12 },
-                        { "days_after_open": 14, "max_points": 7 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 12
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 7
+                        }
                     ]
                 }
             ]
@@ -190,8 +250,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -204,8 +270,14 @@
                     "memory_limit": "256MB",
                     "max_score": 5,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 4 },
-                        { "days_after_open": 14, "max_points": 3 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 4
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 3
+                        }
                     ]
                 },
                 {
@@ -218,8 +290,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -232,8 +310,14 @@
                     "memory_limit": "256MB",
                     "max_score": 8,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 6 },
-                        { "days_after_open": 14, "max_points": 4 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 6
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 4
+                        }
                     ]
                 },
                 {
@@ -246,8 +330,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -260,8 +350,14 @@
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 12 },
-                        { "days_after_open": 14, "max_points": 7 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 12
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 7
+                        }
                     ]
                 },
                 {
@@ -274,8 +370,14 @@
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 12 },
-                        { "days_after_open": 14, "max_points": 7 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 12
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 7
+                        }
                     ]
                 },
                 {
@@ -288,8 +390,14 @@
                     "memory_limit": "256MB",
                     "max_score": 8,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 6 },
-                        { "days_after_open": 14, "max_points": 4 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 6
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 4
+                        }
                     ]
                 },
                 {
@@ -302,8 +410,14 @@
                     "memory_limit": "256MB",
                     "max_score": 12,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 10 },
-                        { "days_after_open": 14, "max_points": 6 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 10
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 6
+                        }
                     ]
                 },
                 {
@@ -316,8 +430,14 @@
                     "memory_limit": "256MB",
                     "max_score": 20,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 16 },
-                        { "days_after_open": 14, "max_points": 10 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 16
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 10
+                        }
                     ]
                 }
             ]
@@ -341,8 +461,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -355,8 +481,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -369,8 +501,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -383,8 +521,14 @@
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 12 },
-                        { "days_after_open": 14, "max_points": 7 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 12
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 7
+                        }
                     ]
                 },
                 {
@@ -397,8 +541,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -411,8 +561,14 @@
                     "memory_limit": "256MB",
                     "max_score": 20,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 16 },
-                        { "days_after_open": 14, "max_points": 10 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 16
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 10
+                        }
                     ]
                 },
                 {
@@ -425,8 +581,14 @@
                     "memory_limit": "256MB",
                     "max_score": 10,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 8 },
-                        { "days_after_open": 14, "max_points": 5 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 8
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 5
+                        }
                     ]
                 },
                 {
@@ -439,8 +601,14 @@
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 12 },
-                        { "days_after_open": 14, "max_points": 7 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 12
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 7
+                        }
                     ]
                 },
                 {
@@ -453,8 +621,14 @@
                     "memory_limit": "256MB",
                     "max_score": 20,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 16 },
-                        { "days_after_open": 14, "max_points": 10 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 16
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 10
+                        }
                     ]
                 },
                 {
@@ -467,8 +641,14 @@
                     "memory_limit": "256MB",
                     "max_score": 25,
                     "penalties": [
-                        { "days_after_open": 7, "max_points": 20 },
-                        { "days_after_open": 14, "max_points": 12 }
+                        {
+                            "days_after_open": 7,
+                            "max_points": 20
+                        },
+                        {
+                            "days_after_open": 14,
+                            "max_points": 12
+                        }
                     ]
                 }
             ]
