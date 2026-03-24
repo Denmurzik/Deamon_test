@@ -1,6 +1,6 @@
 {
-    "title": "Mock Course: Tutor Evaluation Testing",
-    "description": "Специальный курс для тестирования функционала проверки семинаристами. Включает старые модули (для проверки штрафов) и новые модули, а также задачи с выставленными максимальными баллами.",
+    "title": "Course1: Основы программирования",
+    "description": "Вводный курс по программированию. Охватывает базовый ввод-вывод, арифметику, условия, циклы, массивы и строки. Подходит для начинающих.",
     "compilers": [
         "python3.7.6",
         "java21.0.5",
@@ -8,33 +8,103 @@
         "mingw8.1cpp",
         "vc2019"
     ],
-    "address_name": "tutor_mock_v2",
+    "address_name": "course1_basics",
     "seminars": [
-        "2024-09-05",
-        "2024-09-12",
-        "2024-09-19",
-        "2024-09-26",
-        "2024-10-03",
-        "2024-10-10",
-        "2024-10-17",
-        "2024-10-24"
+        "2026-09-01",
+        "2026-09-08",
+        "2026-09-15",
+        "2026-09-22",
+        "2026-09-29",
+        "2026-10-06",
+        "2026-10-13",
+        "2026-10-20"
     ],
     "modules": [
         {
-            "title": "Модуль 1: Базовые алгоритмы (Просрочен)",
-            "open_date": "2024-01-01T00:00:00Z",
+            "title": "Модуль 1: Ввод-вывод и арифметика",
+            "open_date": "2026-09-01T00:00:00Z",
             "content": [
                 {
                     "type": "submodule",
-                    "title": "Теория: О-нотация",
-                    "contentUrl": "content/Lecture-1/topic1.md"
+                    "title": "Теория: Ввод-вывод и базовые операции",
+                    "contentUrl": "content/Module-1/theory.md"
                 },
                 {
                     "type": "task",
-                    "title": "Задача 1А. Линейный поиск",
-                    "contentUrl": "content/Lecture-1/task1/task1.md",
+                    "title": "Задача 1.1. Сумма двух чисел",
+                    "contentUrl": "content/Module-1/task1/task1.md",
                     "difficulty": "Easy",
-                    "testsUrl": "content/Lecture-1/task1/tests",
+                    "testsUrl": "content/Module-1/task1/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.2. Произведение трёх чисел",
+                    "contentUrl": "content/Module-1/task2/task2.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task2/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.3. Площадь прямоугольника",
+                    "contentUrl": "content/Module-1/task3/task3.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task3/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.4. Деление с остатком",
+                    "contentUrl": "content/Module-1/task4/task4.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task4/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 8,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 6 },
+                        { "days_after_open": 14, "max_points": 4 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.5. Среднее арифметическое",
+                    "contentUrl": "content/Module-1/task5/task5.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task5/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 8,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 6 },
+                        { "days_after_open": 14, "max_points": 4 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.6. Перевод секунд",
+                    "contentUrl": "content/Module-1/task6/task6.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-1/task6/tests",
                     "time_limit": "1.0s",
                     "memory_limit": "256MB",
                     "max_score": 10,
@@ -45,11 +115,53 @@
                 },
                 {
                     "type": "task",
-                    "title": "Задача 1B. Бинарный поиск",
-                    "contentUrl": "content/Lecture-1/topic2.md",
+                    "title": "Задача 1.7. Последняя цифра числа",
+                    "contentUrl": "content/Module-1/task7/task7.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task7/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.8. Обмен значений",
+                    "contentUrl": "content/Module-1/task8/task8.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-1/task8/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.9. Расстояние между точками",
+                    "contentUrl": "content/Module-1/task9/task9.md",
                     "difficulty": "Medium",
-                    "testsUrl": "content/Lecture-1/task1/tests",
-                    "time_limit": "2.0s",
+                    "testsUrl": "content/Module-1/task9/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 12,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 10 },
+                        { "days_after_open": 14, "max_points": 6 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1.10. Формула Герона",
+                    "contentUrl": "content/Module-1/task10/task10.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-1/task10/tests",
+                    "time_limit": "1.0s",
                     "memory_limit": "256MB",
                     "max_score": 15,
                     "penalties": [
@@ -60,20 +172,283 @@
             ]
         },
         {
-            "title": "Модуль 2: Структуры данных (Свежий)",
-            "open_date": "2026-03-01T00:00:00Z",
+            "title": "Модуль 2: Условия и циклы",
+            "open_date": "2026-09-15T00:00:00Z",
             "content": [
                 {
                     "type": "submodule",
-                    "title": "Теория: Хеш-таблицы",
-                    "contentUrl": "content/Lecture-2/topic3.md"
+                    "title": "Теория: Условные операторы и циклы",
+                    "contentUrl": "content/Module-2/theory.md"
                 },
                 {
                     "type": "task",
-                    "title": "Задача 2А. Подсчет дубликатов",
-                    "contentUrl": "content/Lecture-2/task2.md",
+                    "title": "Задача 2.1. Максимум из двух чисел",
+                    "contentUrl": "content/Module-2/task11/task11.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-2/task11/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.2. Чётное или нечётное",
+                    "contentUrl": "content/Module-2/task12/task12.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-2/task12/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 5,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 4 },
+                        { "days_after_open": 14, "max_points": 3 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.3. Високосный год",
+                    "contentUrl": "content/Module-2/task13/task13.md",
                     "difficulty": "Medium",
-                    "testsUrl": "content/Lecture-2/task2/tests",
+                    "testsUrl": "content/Module-2/task13/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.4. Сумма от 1 до N",
+                    "contentUrl": "content/Module-2/task14/task14.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-2/task14/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 8,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 6 },
+                        { "days_after_open": 14, "max_points": 4 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.5. Факториал числа",
+                    "contentUrl": "content/Module-2/task15/task15.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-2/task15/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.6. Числа Фибоначчи",
+                    "contentUrl": "content/Module-2/task16/task16.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-2/task16/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 15,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 12 },
+                        { "days_after_open": 14, "max_points": 7 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.7. Проверка простоты числа",
+                    "contentUrl": "content/Module-2/task17/task17.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-2/task17/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 15,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 12 },
+                        { "days_after_open": 14, "max_points": 7 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.8. Подсчёт цифр числа",
+                    "contentUrl": "content/Module-2/task18/task18.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-2/task18/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 8,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 6 },
+                        { "days_after_open": 14, "max_points": 4 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.9. Реверс числа",
+                    "contentUrl": "content/Module-2/task19/task19.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-2/task19/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 12,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 10 },
+                        { "days_after_open": 14, "max_points": 6 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2.10. Таблица умножения",
+                    "contentUrl": "content/Module-2/task20/task20.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-2/task20/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 20,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 16 },
+                        { "days_after_open": 14, "max_points": 10 }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Модуль 3: Массивы и строки",
+            "open_date": "2026-10-01T00:00:00Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Теория: Массивы и строки",
+                    "contentUrl": "content/Module-3/theory.md"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.1. Сумма элементов массива",
+                    "contentUrl": "content/Module-3/task21/task21.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-3/task21/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.2. Минимум и максимум массива",
+                    "contentUrl": "content/Module-3/task22/task22.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-3/task22/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.3. Линейный поиск",
+                    "contentUrl": "content/Module-3/task23/task23.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-3/task23/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.4. Подсчёт вхождений",
+                    "contentUrl": "content/Module-3/task24/task24.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-3/task24/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 15,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 12 },
+                        { "days_after_open": 14, "max_points": 7 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.5. Перевёрнутый массив",
+                    "contentUrl": "content/Module-3/task25/task25.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-3/task25/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.6. Сортировка пузырьком",
+                    "contentUrl": "content/Module-3/task26/task26.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-3/task26/tests",
+                    "time_limit": "2.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 20,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 16 },
+                        { "days_after_open": 14, "max_points": 10 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.7. Длина строки",
+                    "contentUrl": "content/Module-3/task27/task27.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Module-3/task27/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.8. Палиндром",
+                    "contentUrl": "content/Module-3/task28/task28.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-3/task28/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 15,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 12 },
+                        { "days_after_open": 14, "max_points": 7 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3.9. Подсчёт слов",
+                    "contentUrl": "content/Module-3/task29/task29.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Module-3/task29/tests",
                     "time_limit": "1.0s",
                     "memory_limit": "256MB",
                     "max_score": 20,
@@ -84,94 +459,16 @@
                 },
                 {
                     "type": "task",
-                    "title": "Задача 2B. LRU Кэш",
-                    "contentUrl": "content/Lecture-2/task3.md",
+                    "title": "Задача 3.10. Подстрока",
+                    "contentUrl": "content/Module-3/task30/task30.md",
                     "difficulty": "Hard",
-                    "testsUrl": "content/Lecture-2/task3/tests",
-                    "time_limit": "3.0s",
-                    "memory_limit": "512MB",
-                    "max_score": 30,
-                    "penalties": [
-                        { "days_after_open": 7, "max_points": 24 },
-                        { "days_after_open": 14, "max_points": 15 }
-                    ]
-                }
-            ]
-        },
-        {
-            "title": "Модуль 3: Графы и обходы (Средней давности)",
-            "open_date": "2025-06-01T00:00:00Z",
-            "content": [
-                {
-                    "type": "submodule",
-                    "title": "Теория: Графы и обходы",
-                    "contentUrl": "content/Lecture-3/topic5.md"
-                },
-                {
-                    "type": "task",
-                    "title": "Задача 3А. Компоненты связности",
-                    "contentUrl": "content/Lecture-3/task4.md",
-                    "difficulty": "Medium",
-                    "testsUrl": "content/Lecture-3/task4/tests",
-                    "time_limit": "2.0s",
+                    "testsUrl": "content/Module-3/task30/tests",
+                    "time_limit": "1.0s",
                     "memory_limit": "256MB",
                     "max_score": 25,
                     "penalties": [
-                        { "days_after_open": 10, "max_points": 17 },
-                        { "days_after_open": 20, "max_points": 10 }
-                    ]
-                },
-                {
-                    "type": "task",
-                    "title": "Задача 3B. Кратчайший путь (BFS)",
-                    "contentUrl": "content/Lecture-3/task5.md",
-                    "difficulty": "Hard",
-                    "testsUrl": "content/Lecture-3/task5/tests",
-                    "time_limit": "2.0s",
-                    "memory_limit": "256MB",
-                    "max_score": 30,
-                    "penalties": [
-                        { "days_after_open": 10, "max_points": 21 },
-                        { "days_after_open": 20, "max_points": 12 }
-                    ]
-                }
-            ]
-        },
-        {
-            "title": "Модуль 4: Динамическое программирование (Будущий)",
-            "open_date": "2026-06-01T00:00:00Z",
-            "content": [
-                {
-                    "type": "submodule",
-                    "title": "Теория: Динамическое программирование",
-                    "contentUrl": "content/Lecture-4/topic6.md"
-                },
-                {
-                    "type": "task",
-                    "title": "Задача 4А. Размен монет",
-                    "contentUrl": "content/Lecture-4/task6.md",
-                    "difficulty": "Medium",
-                    "testsUrl": "content/Lecture-4/task6/tests",
-                    "time_limit": "1.0s",
-                    "memory_limit": "256MB",
-                    "max_score": 20,
-                    "penalties": [
-                        { "days_after_open": 14, "max_points": 18 },
-                        { "days_after_open": 28, "max_points": 12 }
-                    ]
-                },
-                {
-                    "type": "task",
-                    "title": "Задача 4B. Наибольшая возрастающая подпоследовательность",
-                    "contentUrl": "content/Lecture-4/task7.md",
-                    "difficulty": "Hard",
-                    "testsUrl": "content/Lecture-4/task7/tests",
-                    "time_limit": "2.0s",
-                    "memory_limit": "512MB",
-                    "max_score": 35,
-                    "penalties": [
-                        { "days_after_open": 14, "max_points": 31 },
-                        { "days_after_open": 28, "max_points": 21 }
+                        { "days_after_open": 7, "max_points": 20 },
+                        { "days_after_open": 14, "max_points": 12 }
                     ]
                 }
             ]

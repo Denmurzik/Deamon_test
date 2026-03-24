@@ -1,0 +1,186 @@
+{
+    "title": "Mock Course: Tutor Evaluation Testing",
+    "description": "Специальный курс для тестирования функционала проверки семинаристами. Включает старые модули (для проверки штрафов) и новые модули, а также задачи с выставленными максимальными баллами.",
+    "compilers": [
+        "python3.7.6",
+        "java21.0.5",
+        "mingwc5.1.0",
+        "mingw8.1cpp",
+        "vc2019"
+    ],
+    "address_name": "tutor_mock_v2",
+    "seminars": [
+        "2024-09-05",
+        "2024-09-12",
+        "2024-09-19",
+        "2024-09-26",
+        "2024-10-03",
+        "2024-10-10",
+        "2024-10-17",
+        "2024-10-24"
+    ],
+    "modules": [
+        {
+            "title": "Модуль 1: Базовые алгоритмы (Просрочен)",
+            "open_date": "2024-01-01T00:00:00Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Теория: О-нотация",
+                    "contentUrl": "content/Lecture-1/topic1.md"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1А. Линейный поиск",
+                    "contentUrl": "content/Lecture-1/task1/task1.md",
+                    "difficulty": "Easy",
+                    "testsUrl": "content/Lecture-1/task1/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 10,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 8 },
+                        { "days_after_open": 14, "max_points": 5 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 1B. Бинарный поиск",
+                    "contentUrl": "content/Lecture-1/topic2.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Lecture-1/task1/tests",
+                    "time_limit": "2.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 15,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 12 },
+                        { "days_after_open": 14, "max_points": 7 }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Модуль 2: Структуры данных (Свежий)",
+            "open_date": "2026-03-01T00:00:00Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Теория: Хеш-таблицы",
+                    "contentUrl": "content/Lecture-2/topic3.md"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2А. Подсчет дубликатов",
+                    "contentUrl": "content/Lecture-2/task2.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Lecture-2/task2/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 20,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 16 },
+                        { "days_after_open": 14, "max_points": 10 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 2B. LRU Кэш",
+                    "contentUrl": "content/Lecture-2/task3.md",
+                    "difficulty": "Hard",
+                    "testsUrl": "content/Lecture-2/task3/tests",
+                    "time_limit": "3.0s",
+                    "memory_limit": "512MB",
+                    "max_score": 30,
+                    "penalties": [
+                        { "days_after_open": 7, "max_points": 24 },
+                        { "days_after_open": 14, "max_points": 15 }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Модуль 3: Графы и обходы (Средней давности)",
+            "open_date": "2025-06-01T00:00:00Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Теория: Графы и обходы",
+                    "contentUrl": "content/Lecture-3/topic5.md"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3А. Компоненты связности",
+                    "contentUrl": "content/Lecture-3/task4.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Lecture-3/task4/tests",
+                    "time_limit": "2.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 25,
+                    "penalties": [
+                        { "days_after_open": 10, "max_points": 17 },
+                        { "days_after_open": 20, "max_points": 10 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 3B. Кратчайший путь (BFS)",
+                    "contentUrl": "content/Lecture-3/task5.md",
+                    "difficulty": "Hard",
+                    "testsUrl": "content/Lecture-3/task5/tests",
+                    "time_limit": "2.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 30,
+                    "penalties": [
+                        { "days_after_open": 10, "max_points": 21 },
+                        { "days_after_open": 20, "max_points": 12 }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Модуль 4: Динамическое программирование (Будущий)",
+            "open_date": "2026-06-01T00:00:00Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Теория: Динамическое программирование",
+                    "contentUrl": "content/Lecture-4/topic6.md"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 4А. Размен монет",
+                    "contentUrl": "content/Lecture-4/task6.md",
+                    "difficulty": "Medium",
+                    "testsUrl": "content/Lecture-4/task6/tests",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB",
+                    "max_score": 20,
+                    "penalties": [
+                        { "days_after_open": 14, "max_points": 18 },
+                        { "days_after_open": 28, "max_points": 12 }
+                    ]
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 4B. Наибольшая возрастающая подпоследовательность",
+                    "contentUrl": "content/Lecture-4/task7.md",
+                    "difficulty": "Hard",
+                    "testsUrl": "content/Lecture-4/task7/tests",
+                    "time_limit": "2.0s",
+                    "memory_limit": "512MB",
+                    "max_score": 35,
+                    "penalties": [
+                        { "days_after_open": 14, "max_points": 31 },
+                        { "days_after_open": 28, "max_points": 21 }
+                    ]
+                }
+            ]
+        }
+    ],
+    "allowed_users": [],
+    "allowed_groups": [
+        "24214",
+        "24215",
+        "24216"
+    ]
+}
