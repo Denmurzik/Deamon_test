@@ -654,10 +654,10 @@
             ]
         }
     ],
-    "allowed_users": [],
+    "allowed_users": [
+        "d.muruev@g.nsu.ru"
+    ],
     "allowed_groups": [
-        "24214",
-        "24215",
         "24216"
     ]
 }
