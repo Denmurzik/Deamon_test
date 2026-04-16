@@ -26,16 +26,21 @@ jobs:
           # Убедитесь, что устанавливаются все нужные библиотеки для клиента
           pip install requests pydantic pyyaml
 
-      # 2. Запускаем runner.py
-      # Теперь мы передаем точку "." (текущая директория), так как checkout распаковал курс прямо сюда.
-      # PYTHONPATH=. нужен, чтобы питон видел пакет src как модуль.
+      # 2. Валидация курса перед загрузкой
+      - name: Validate Course
+        env:
+          PYTHONPATH: .
+        run: |
+          echo "🔍 Validating course structure..."
+          python -m src.validate Example
+
+      # 3. Запускаем runner.py (только если валидация прошла)
       - name: Upload Course
+        if: success()
         env:
           LMS_API_URL: ${{ secrets.LMS_API_URL }}
           LMS_API_TOKEN: ${{ secrets.LMS_API_TOKEN }}
-          # Указываем Python, где искать пакет src
           PYTHONPATH: .
         run: |
           echo "🚀 Sending to Public API: $LMS_API_URL"
-          # Запускаем runner как модуль и передаем ему путь к папке 'example'
           python -m src.runner Example
