@@ -136,7 +136,12 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
     # Извлекаем список разрешенных пользователей
     allowed_users = json_data.get("allowed_users") or json_data.get("allowedUsers") or []
     allowed_groups = json_data.get("allowed_groups") or None
+    # Список преподавателей курса — email'ы, которые бэкенд при импорте
+    # enroll'ит как course_enrollments.role=teacher. Глобальная роль НЕ даётся.
+    teachers = json_data.get("teachers") or None
     print(f"🔎 DEBUG: Parser found allowed_users: {allowed_users}")
+    if teachers:
+        print(f"🔎 DEBUG: Parser found teachers: {teachers}")
 
     course = CourseModel(
         title=json_data.get("title", json_data.get("course_name", "Imported Course")),
@@ -146,6 +151,7 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         close_date=json_data.get("close_date"),
         allowed_users=allowed_users if isinstance(allowed_users, list) else [],
         allowed_groups=allowed_groups if isinstance(allowed_groups, list) else None,
+        teachers=teachers if isinstance(teachers, list) else None,
         compilers=json_data.get("compilers"),
         seminars=json_data.get("seminars"),
         modules=parsed_modules,

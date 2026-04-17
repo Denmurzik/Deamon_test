@@ -68,6 +68,12 @@ class CourseModel(BaseModel):
     close_date: Optional[str] = None
     allowed_users: List[str] = Field(default_factory=list)
     allowed_groups: Optional[List[str]] = None
+    # List of emails that should be enrolled as teachers for this course.
+    # Backend (ImportController) turns each email into a per-course
+    # CourseRole.teacher enrollment. No global UserRole.teacher is assigned —
+    # tutor-UI visibility on the frontend is driven by /auth/me's
+    # gradableCourseIds array, which is populated from course_enrollments.
+    teachers: Optional[List[str]] = None
     compilers: Optional[List[str]] = None
     seminars: Optional[List[str]] = None
     modules: List[ModuleModel]
