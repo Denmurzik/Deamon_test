@@ -123,7 +123,21 @@ jobs:
           echo "Host resolution:"
           getent hosts "$TARGET_HOST" || true
 
-          HTTP_CODE="$(curl -k -o /dev/null -sS -w '%{http_code}' --connect-timeout 15 --max-time 30 "$LMS_API_URL")"
+          TARGET_IPS="$(getent ahostsv4 "$TARGET_HOST" | awk '{print $1}' | sort -u)"
+          if [ -z "$TARGET_IPS" ]; then
+            echo "Could not resolve any IPv4 address for $TARGET_HOST."
+            exit 1
+          fi
+
+          for target_ip in $TARGET_IPS; do
+            echo "Routing $target_ip/32 through nsuvpn0"
+            sudo ip route replace "$target_ip"/32 dev nsuvpn0
+          done
+
+          echo "Routes after target host pinning:"
+          ip route
+
+          HTTP_CODE="$(curl -k -o /dev/null -sS -w '%{http_code}' --connect-timeout 15 --max-time 30 "$LMS_API_URL" || true)"
           if [ "$HTTP_CODE" = "000" ]; then
             echo "Private endpoint is still unreachable after VPN."
             exit 1
