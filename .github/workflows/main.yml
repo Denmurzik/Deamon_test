@@ -1,16 +1,20 @@
-name: Deploy via Public API
+name: Deploy via Private API
 
 on:
   pull_request_target:
     types: [labeled]
 
+concurrency:
+  group: nsu-vpn-import
+  cancel-in-progress: false
+
 jobs:
   deploy-via-api:
     if: contains(github.event.pull_request.labels.*.name, 'deploy')
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
-      # 1. Скачиваем содержимое репозитория (оно попадает в текущую папку)
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
@@ -20,22 +24,115 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Check endpoint reachability without VPN
+        continue-on-error: true
+        env:
+          LMS_API_URL: ${{ secrets.LMS_API_URL }}
+        run: |
+          if curl -kIsS --connect-timeout 10 --max-time 20 "$LMS_API_URL" >/dev/null; then
+            echo "Private endpoint is already reachable without VPN."
+          else
+            echo "Private endpoint is not reachable without VPN yet."
+          fi
+
+      - name: Install SSTP VPN dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ppp sstp-client iproute2
+
+      - name: Configure and start NSU VPN
+        env:
+          NSU_VPN_USERNAME: ${{ secrets.NSU_VPN_USERNAME }}
+          NSU_VPN_PASSWORD: ${{ secrets.NSU_VPN_PASSWORD }}
+        run: |
+          sudo install -d -m 700 /etc/ppp/peers
+          sudo tee /etc/ppp/peers/nsu-vpn >/dev/null <<EOF
+          pty "/usr/sbin/sstpc --cert-warn --save-server-route --nolaunchpppd vpn.nsu.ru"
+          name "${NSU_VPN_USERNAME}"
+          password "${NSU_VPN_PASSWORD}"
+          remotename SSTP
+          linkname nsu-vpn
+          ifname nsuvpn0
+          noauth
+          noipdefault
+          defaultroute
+          usepeerdns
+          refuse-eap
+          refuse-pap
+          refuse-chap
+          refuse-mschap
+          require-mschap-v2
+          nomppe
+          persist
+          maxfail 1
+          holdoff 5
+          logfd 2
+          EOF
+          sudo chmod 600 /etc/ppp/peers/nsu-vpn
+
+          sudo poff nsu-vpn >/dev/null 2>&1 || true
+          sudo pon nsu-vpn
+
+          for attempt in {1..12}; do
+            if ip link show nsuvpn0 >/dev/null 2>&1; then
+              echo "VPN interface nsuvpn0 is up."
+              exit 0
+            fi
+
+            echo "Waiting for VPN interface (attempt ${attempt}/12)..."
+            sleep 5
+          done
+
+          echo "VPN interface did not appear in time."
+          ip route
+          sudo pgrep -af 'pppd|sstpc' || true
+          exit 1
+
+      - name: Verify private endpoint over VPN
+        env:
+          LMS_API_URL: ${{ secrets.LMS_API_URL }}
+        run: |
+          TARGET_HOST="$(python - <<'PY'
+          import os
+          from urllib.parse import urlparse
+
+          print(urlparse(os.environ["LMS_API_URL"]).hostname or "")
+          PY
+          )"
+
+          echo "VPN routes:"
+          ip route
+          echo "VPN interface:"
+          ip addr show nsuvpn0
+          echo "Host resolution:"
+          getent hosts "$TARGET_HOST" || true
+
+          HTTP_CODE="$(curl -k -o /dev/null -sS -w '%{http_code}' --connect-timeout 15 --max-time 30 "$LMS_API_URL")"
+          if [ "$HTTP_CODE" = "000" ]; then
+            echo "Private endpoint is still unreachable after VPN."
+            exit 1
+          fi
+
+          echo "Private endpoint responded with HTTP $HTTP_CODE."
+
+      - name: Install Python dependencies
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # Убедитесь, что устанавливаются все нужные библиотеки для клиента
           pip install requests pydantic pyyaml
 
-      # 2. Запускаем runner.py
-      # Теперь мы передаем точку "." (текущая директория), так как checkout распаковал курс прямо сюда.
-      # PYTHONPATH=. нужен, чтобы питон видел пакет src как модуль.
       - name: Upload Course
         env:
           LMS_API_URL: ${{ secrets.LMS_API_URL }}
           LMS_API_TOKEN: ${{ secrets.LMS_API_TOKEN }}
-          # Указываем Python, где искать пакет src
           PYTHONPATH: .
         run: |
-          echo "🚀 Sending to Public API: $LMS_API_URL"
-          # Запускаем runner как модуль и передаем ему путь к папке 'example'
+          echo "🚀 Sending to Private API: $LMS_API_URL"
           python -m src.runner Example
+
+      - name: Cleanup VPN artifacts
+        if: ${{ always() }}
+        run: |
+          sudo poff nsu-vpn >/dev/null 2>&1 || true
+          sudo pkill -f '/usr/sbin/sstpc .* vpn.nsu.ru' || true
+          sudo pkill -f 'pppd call nsu-vpn' || true
+          sudo rm -f /etc/ppp/peers/nsu-vpn
