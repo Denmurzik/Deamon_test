@@ -76,7 +76,6 @@ jobs:
           refuse-pap
           refuse-chap
           refuse-mschap
-          require-mschap-v2
           nomppe
           noccp
           nobsdcomp
