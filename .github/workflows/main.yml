@@ -156,6 +156,8 @@ jobs:
           LMS_API_TOKEN: ${{ secrets.LMS_API_TOKEN }}
           PYTHONPATH: .
         run: |
+          export LMS_API_URL="$(printf '%s' "$LMS_API_URL" | tr -d '\r\n')"
+          export LMS_API_TOKEN="$(printf '%s' "$LMS_API_TOKEN" | tr -d '\r\n')"
           echo "🚀 Sending to Private API: $LMS_API_URL"
           python -m src.runner Example
 
