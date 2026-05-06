@@ -46,13 +46,28 @@ jobs:
           NSU_VPN_PASSWORD: ${{ secrets.NSU_VPN_PASSWORD }}
         run: |
           sudo install -d -m 700 /etc/ppp/peers
+          if [ -f /etc/ppp/chap-secrets ]; then
+            sudo cp /etc/ppp/chap-secrets /etc/ppp/chap-secrets.github-actions.bak
+          fi
+          printf '"%s" * "%s" *\n' "$NSU_VPN_USERNAME" "$NSU_VPN_PASSWORD" | sudo tee /etc/ppp/chap-secrets >/dev/null
+          sudo chmod 600 /etc/ppp/chap-secrets
+
+          PLUGIN_PATH="$(dpkg -L sstp-client | grep 'sstp-pppd-plugin.so$' | head -n 1)"
+          if [ -z "$PLUGIN_PATH" ]; then
+            echo "Could not locate sstp-pppd-plugin.so"
+            exit 1
+          fi
+
           sudo tee /etc/ppp/peers/nsu-vpn >/dev/null <<EOF
-          pty "/usr/sbin/sstpc --cert-warn --save-server-route --nolaunchpppd vpn.nsu.ru"
+          pty "/usr/sbin/sstpc --ipparam nsu-vpn --cert-warn --save-server-route --nolaunchpppd vpn.nsu.ru"
+          user "${NSU_VPN_USERNAME}"
           name "${NSU_VPN_USERNAME}"
-          password "${NSU_VPN_PASSWORD}"
-          remotename SSTP
+          remotename vpn.nsu.ru
           linkname nsu-vpn
+          ipparam nsu-vpn
           ifname nsuvpn0
+          plugin ${PLUGIN_PATH}
+          sstp-sock /var/run/sstpc/sstpc-nsu-vpn
           noauth
           noipdefault
           defaultroute
@@ -63,7 +78,9 @@ jobs:
           refuse-mschap
           require-mschap-v2
           nomppe
-          persist
+          noccp
+          nobsdcomp
+          nodeflate
           maxfail 1
           holdoff 5
           logfd 2
@@ -136,3 +153,8 @@ jobs:
           sudo pkill -f '/usr/sbin/sstpc .* vpn.nsu.ru' || true
           sudo pkill -f 'pppd call nsu-vpn' || true
           sudo rm -f /etc/ppp/peers/nsu-vpn
+          if [ -f /etc/ppp/chap-secrets.github-actions.bak ]; then
+            sudo mv /etc/ppp/chap-secrets.github-actions.bak /etc/ppp/chap-secrets
+          else
+            sudo rm -f /etc/ppp/chap-secrets
+          fi
