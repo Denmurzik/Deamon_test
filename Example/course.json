@@ -97,7 +97,7 @@
           "title": "Задача 9. Судоку",
           "contentUrl": "content/Taskset-6/task9.md",
           "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task9/tests",
+          "testsUrl": "content/Taskset-6/task9",
           "time_limit": "1.0s",
           "memory_limit": "256MB"
         },
@@ -106,7 +106,7 @@
           "title": "Задача 10. Наибольшая возрастающая подпоследовательность+",
           "contentUrl": "content/Taskset-6/task10.md",
           "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task10/tests",
+          "testsUrl": "content/Taskset-6/task10",
           "time_limit": "1.0s",
           "memory_limit": "256MB"
         },
@@ -115,7 +115,7 @@
           "title": "Задача 11. Рёберно непересекающиеся пути",
           "contentUrl": "content/Taskset-6/task11.md",
           "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task11/tests",
+          "testsUrl": "content/Taskset-6/task11",
           "time_limit": "1.0s",
           "memory_limit": "256MB"
         },
@@ -124,7 +124,7 @@
           "title": "Задача 12. Вершинно непересекающиеся пути",
           "contentUrl": "content/Taskset-6/task12.md",
           "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task12/tests",
+          "testsUrl": "content/Taskset-6/task12",
           "time_limit": "1.0s",
           "memory_limit": "256MB"
         }
