@@ -3,7 +3,7 @@
   "address_name": "nsuprogexperimental",
   "description": "Императивное программирование для первого курса (Си + АиСД).",
   "compilers": [
-    "mingw8.1c",
+    "mingw11.2c",
     "vcc2019"
   ],
   "modules": [
