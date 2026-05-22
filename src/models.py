@@ -10,7 +10,7 @@ class PenaltyLevel(BaseModel):
 
 class TaskModel(BaseModel):
     """
-    Задача внутри подмодуля.
+    Задача для module-level content или explicit submodule.tasks[].
     Соответствует серверному TaskImportDto.
     """
     model_config = ConfigDict(populate_by_name=True)
@@ -27,17 +27,24 @@ class TaskModel(BaseModel):
     penalties: Optional[List[PenaltyLevel]] = None
 
 
-class SubmoduleModel(BaseModel):
+class ContentItemModel(BaseModel):
     """
-    Подмодуль, содержащий задачи.
-    Соответствует серверному SubmoduleImportDto.
+    Элемент module.content[].
+    Для explicit submodule содержит вложенный tasks[].
     """
     model_config = ConfigDict(populate_by_name=True)
 
+    type: Literal["submodule", "task", "theory"]
     title: str
     description: Optional[str] = None
     contentUrl: Optional[str] = None
-    tasks: List[TaskModel]
+    difficulty: Optional[str] = None
+    max_score: Optional[int] = Field(default=None, ge=1)
+    time_limit: Optional[str] = None
+    memory_limit: Optional[str] = None
+    testsUrl: Optional[str] = None
+    penalties: Optional[List[PenaltyLevel]] = None
+    tasks: Optional[List[TaskModel]] = None
 
 
 class ModuleModel(BaseModel):
@@ -51,7 +58,7 @@ class ModuleModel(BaseModel):
     open_date: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
-    submodules: List[SubmoduleModel]
+    content: List[ContentItemModel]
 
 
 class CourseModel(BaseModel):
