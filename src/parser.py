@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 from .exceptions import MissingFileError, StructureError
 from .models import (
-    CourseModel, ModuleModel, SubmoduleModel, TaskModel, PenaltyLevel
+    ContentItemModel, CourseModel, ModuleModel, TaskModel, PenaltyLevel
 )
 
 
@@ -69,7 +69,9 @@ def _make_task(item: Dict[str, Any], course_root: Path) -> TaskModel:
 def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
     """
     Преобразует сырой JSON курса в валидированный словарь для отправки.
-    Формат: course.title → modules[].title → submodules[].tasks[]
+    Канонический формат: course.title → modules[].content[].
+    Direct task-элементы остаются на уровне модуля, explicit submodule
+    сериализуются как content-item с вложенным tasks[].
     """
     modules_data = json_data.get("modules", [])
     parsed_modules: List[ModuleModel] = []
@@ -78,8 +80,8 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
         mod_title = mod.get("title", mod.get("module_name", "Untitled Module"))
         raw_content = mod.get("content", mod.get("submodules", []))
 
-        # Группируем элементы в submodules → tasks
-        submodules: List[SubmoduleModel] = []
+        # Собираем канонический module.content[].
+        content_items: List[ContentItemModel] = []
         current_sub_meta: Optional[Dict[str, Any]] = None
         current_tasks: List[TaskModel] = []
 
@@ -88,9 +90,8 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
 
             # Уже новый формат: submodule с вложенными tasks[]
             if "tasks" in item and isinstance(item["tasks"], list):
-                # Сбросим накопленные задачи
-                if current_tasks:
-                    _flush_submodule(submodules, current_sub_meta, current_tasks, course_root)
+                if current_tasks or current_sub_meta is not None:
+                    _flush_content_group(content_items, current_sub_meta, current_tasks, course_root)
                     current_sub_meta = None
                     current_tasks = []
 
@@ -103,7 +104,8 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
                         sub_desc = None
 
                 tasks = [_make_task(t, course_root) for t in item["tasks"]]
-                submodules.append(SubmoduleModel(
+                content_items.append(ContentItemModel(
+                    type="submodule",
                     title=item.get("title", "Untitled"),
                     description=sub_desc,
                     contentUrl=sub_content_url,
@@ -114,7 +116,7 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
             # Старый формат: плоский список submodule/task
             if item_type == "submodule":
                 if current_tasks or current_sub_meta is not None:
-                    _flush_submodule(submodules, current_sub_meta, current_tasks, course_root)
+                    _flush_content_group(content_items, current_sub_meta, current_tasks, course_root)
                     current_tasks = []
                 current_sub_meta = item
 
@@ -123,14 +125,14 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
 
         # Финализация оставшихся элементов
         if current_tasks or current_sub_meta is not None:
-            _flush_submodule(submodules, current_sub_meta, current_tasks, course_root)
+            _flush_content_group(content_items, current_sub_meta, current_tasks, course_root)
 
         parsed_modules.append(ModuleModel(
             title=mod_title,
             open_date=mod.get("open_date"),
             start_date=mod.get("start_date"),
             end_date=mod.get("end_date"),
-            submodules=submodules,
+            content=content_items,
         ))
 
     # Извлекаем список разрешенных пользователей
@@ -160,13 +162,29 @@ def _parse_from_json(course_root: Path, json_data: Dict[str, Any]) -> dict:
     return course.model_dump(exclude_none=True)
 
 
-def _flush_submodule(
-    submodules: List[SubmoduleModel],
+def _flush_content_group(
+    content_items: List[ContentItemModel],
     meta: Optional[Dict[str, Any]],
     tasks: List[TaskModel],
     course_root: Path,
 ) -> None:
-    """Создаёт SubmoduleModel из мета-данных submodule и накопленных задач."""
+    """Сериализует накопленную группу в module.content[]."""
+    if meta is None:
+        for task in tasks:
+            content_items.append(ContentItemModel(
+                type=task.type,
+                title=task.title,
+                description=task.description,
+                contentUrl=task.contentUrl,
+                difficulty=task.difficulty,
+                max_score=task.max_score,
+                time_limit=task.time_limit,
+                memory_limit=task.memory_limit,
+                testsUrl=task.testsUrl,
+                penalties=task.penalties,
+            ))
+        return
+
     if meta is not None:
         content_url = meta.get("contentUrl")
         description = None
@@ -176,12 +194,9 @@ def _flush_submodule(
             except Exception:
                 description = None
         title = meta.get("title", meta.get("submodule_name", "Untitled"))
-    else:
-        content_url = None
-        description = None
-        title = "General"
 
-    submodules.append(SubmoduleModel(
+    content_items.append(ContentItemModel(
+        type="submodule",
         title=title,
         description=description,
         contentUrl=content_url,
