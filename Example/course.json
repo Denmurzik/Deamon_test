@@ -1,146 +1,141 @@
 {
-  "title": "Императивное программирование",
-  "address_name": "nsuprogexperimental",
-  "description": "Императивное программирование для первого курса (Си + АиСД).",
-  "compilers": [
-    "mingw11.2c",
-    "vcc2019"
-  ],
-  "modules": [
-    {
-      "title": "Лекциия 9: перебор и динамическое программирование",
-      "startDate": "2026-04-04T00:00:00Z",
-      "endDate": "2026-04-04T23:59:59Z",
-      "content": [
+    "title": "Курс для депонстрации",
+    "address_name": "pokaz",
+    "description": "Императивное программирование для первого курса (Си + АиСД).",
+    "compilers": [
+        "mingw8.1c",
+        "vcc2019"
+    ],
+    "modules": [
         {
-          "type": "submodule",
-          "title": "Перебор",
-          "contentUrl": "content/Lecture-9/1.md"
+            "title": "Лекциия 9: перебор и динамическое программирование",
+            "startDate": "2026-04-04T00:00:00Z",
+            "endDate": "2026-04-04T23:59:59Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Перебор",
+                    "contentUrl": "content/Lecture-9/1.md"
+                },
+                {
+                    "type": "submodule",
+                    "title": "Динамическое программирование",
+                    "contentUrl": "content/Lecture-9/2.md"
+                }
+            ]
         },
         {
-          "type": "submodule",
-          "title": "Динамическое программирование",
-          "contentUrl": "content/Lecture-9/2.md"
+            "title": "Лекция 10: потоки в сетях",
+            "startDate": "2026-04-11T00:00:00Z",
+            "endDate": "2026-04-11T23:59:59Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Потоки",
+                    "contentUrl": "content/Lecture-10/1.md"
+                },
+                {
+                    "type": "submodule",
+                    "title": "Приложения",
+                    "contentUrl": "content/Lecture-10/2.md"
+                }
+            ]
+        },
+        {
+            "title": "Лекция 11: основы теории информации",
+            "startDate": "2026-04-18T00:00:00Z",
+            "endDate": "2026-04-18T23:59:59Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Основы теории информации",
+                    "contentUrl": "content/Lecture-11/1.md"
+                }
+            ]
+        },
+        {
+            "title": "Лекция 12: ООП и немного технических моментов",
+            "startDate": "2026-04-25T00:00:00Z",
+            "endDate": "2026-04-25T23:59:59Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "ООП",
+                    "contentUrl": "content/Lecture-12/1.md"
+                },
+                {
+                    "type": "submodule",
+                    "title": "Время на доступ к памяти",
+                    "contentUrl": "content/Lecture-12/2.md"
+                }
+            ]
+        },
+        {
+            "title": "Лекция 13: управление памятью",
+            "startDate": "2026-05-02T00:00:00Z",
+            "endDate": "2026-05-02T23:59:59Z",
+            "content": [
+                {
+                    "type": "submodule",
+                    "title": "Реализация динамического выделения памяти",
+                    "contentUrl": "content/Lecture-13/1.md"
+                },
+                {
+                    "type": "submodule",
+                    "title": "Проблемы управления памятью",
+                    "contentUrl": "content/Lecture-13/2.md"
+                }
+            ]
+        },
+        {
+            "title": "Набор задач 6",
+            "startDate": "2026-04-18T00:00:00Z",
+            "endDate": "2026-06-02T00:00:00Z",
+            "content": [
+                {
+                    "type": "task",
+                    "title": "Задача 9. Судоку",
+                    "contentUrl": "content/Taskset-6/task9.md",
+                    "difficulty": "hard",
+                    "testsUrl": "content/Taskset-6/task9",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 10. Наибольшая возрастающая подпоследовательность+",
+                    "contentUrl": "content/Taskset-6/task10.md",
+                    "difficulty": "hard",
+                    "testsUrl": "content/Taskset-6/task10",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 11. Рёберно непересекающиеся пути",
+                    "contentUrl": "content/Taskset-6/task11.md",
+                    "difficulty": "hard",
+                    "testsUrl": "content/Taskset-6/task11",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB"
+                },
+                {
+                    "type": "task",
+                    "title": "Задача 12. Вершинно непересекающиеся пути",
+                    "contentUrl": "content/Taskset-6/task12.md",
+                    "difficulty": "hard",
+                    "testsUrl": "content/Taskset-6/task12",
+                    "time_limit": "1.0s",
+                    "memory_limit": "256MB"
+                }
+            ]
         }
-      ]
-    },
-    {
-      "title": "Лекция 10: потоки в сетях",
-      "startDate": "2026-04-11T00:00:00Z",
-      "endDate": "2026-04-11T23:59:59Z",
-      "content": [
-        {
-          "type": "submodule",
-          "title": "Потоки",
-          "contentUrl": "content/Lecture-10/1.md"
-        },
-        {
-          "type": "submodule",
-          "title": "Приложения",
-          "contentUrl": "content/Lecture-10/2.md"
-        }
-      ]
-    },
-    {
-      "title": "Лекция 11: основы теории информации",
-      "startDate": "2026-04-18T00:00:00Z",
-      "endDate": "2026-04-18T23:59:59Z",
-      "content": [
-        {
-          "type": "submodule",
-          "title": "Основы теории информации",
-          "contentUrl": "content/Lecture-11/1.md"
-        }
-      ]
-    },
-    {
-      "title": "Лекция 12: ООП и немного технических моментов",
-      "startDate": "2026-04-25T00:00:00Z",
-      "endDate": "2026-04-25T23:59:59Z",
-      "content": [
-        {
-          "type": "submodule",
-          "title": "ООП",
-          "contentUrl": "content/Lecture-12/1.md"
-        },
-        {
-          "type": "submodule",
-          "title": "Время на доступ к памяти",
-          "contentUrl": "content/Lecture-12/2.md"
-        }
-      ]
-    },
-    {
-      "title": "Лекция 13: управление памятью",
-      "startDate": "2026-05-02T00:00:00Z",
-      "endDate": "2026-05-02T23:59:59Z",
-      "content": [
-        {
-          "type": "submodule",
-          "title": "Реализация динамического выделения памяти",
-          "contentUrl": "content/Lecture-13/1.md"
-        },
-        {
-          "type": "submodule",
-          "title": "Проблемы управления памятью",
-          "contentUrl": "content/Lecture-13/2.md"
-        }
-      ]
-    },
-    {
-      "title": "Набор задач 6",
-      "startDate": "2026-04-18T00:00:00Z",
-      "endDate": "2026-05-02T00:00:00Z",
-      "content": [
-        {
-          "type": "task",
-          "title": "Задача 9. Судоку",
-          "contentUrl": "content/Taskset-6/task9.md",
-          "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task9",
-          "time_limit": "1.0s",
-          "memory_limit": "256MB"
-        },
-        {
-          "type": "task",
-          "title": "Задача 10. Наибольшая возрастающая подпоследовательность+",
-          "contentUrl": "content/Taskset-6/task10.md",
-          "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task10",
-          "time_limit": "1.0s",
-          "memory_limit": "256MB"
-        },
-        {
-          "type": "task",
-          "title": "Задача 11. Рёберно непересекающиеся пути",
-          "contentUrl": "content/Taskset-6/task11.md",
-          "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task11",
-          "time_limit": "1.0s",
-          "memory_limit": "256MB"
-        },
-        {
-          "type": "task",
-          "title": "Задача 12. Вершинно непересекающиеся пути",
-          "contentUrl": "content/Taskset-6/task12.md",
-          "difficulty": "hard",
-          "testsUrl": "content/Taskset-6/task12",
-          "time_limit": "1.0s",
-          "memory_limit": "256MB"
-        }
-      ]
-    }
-  ],
-  "teachers": [
-    "a.stenenko@g.nsu.ru",
-    "t.nesterenko@g.nsu.ru",
-    "m.bukhner@g.nsu.ru",
-    "s.vladimirov@alumni.nsu.ru"
-  ],
-  "allowed_groups": [
-    "25213",
-    "25214",
-    "25215",
-    "25216"
-  ]
+    ],
+    "teachers": [
+        "a.stenenko@g.nsu.ru"
+    ],
+    "allowed_groups": [
+        "24216",
+        "24214"
+    ]
 }
