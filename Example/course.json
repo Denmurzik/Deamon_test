@@ -1,6 +1,6 @@
 {
-    "title": "Курс для демонстрации",
-    "address_name": "pokazprez",
+    "title": "Курс для демонстрации.",
+    "address_name": "pokazprezent",
     "description": "Императивное программирование для первого курса (Си + АиСД).",
     "compilers": [
         "mingw8.1c",
